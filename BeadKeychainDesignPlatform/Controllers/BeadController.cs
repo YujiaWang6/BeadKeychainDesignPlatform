@@ -75,7 +75,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// Successful: redirect to List page
         /// Fail: redirect to Error page
         /// </returns>
-        // POST: Bead/Create
+        /// POST: Bead/Create
         [HttpPost]
         public ActionResult Create(Bead bead)
         {
@@ -105,7 +105,13 @@ namespace BeadKeychainDesignPlatform.Controllers
             return View();
         }
 
-        // GET: Bead/Edit/5
+
+        /// <summary>
+        /// The MVC5 view called Edit.cshtml has a form to collect the updating data for a sepcific bead.
+        /// </summary>
+        /// <param name="id">The specific bead primary key</param>
+        /// <returns>Send collected data to Update Method</returns>
+        /// GET: Bead/Edit/5
         public ActionResult Edit(int id)
         {
             //UpdateBead ViewModel = new UpdateBead();
@@ -118,7 +124,17 @@ namespace BeadKeychainDesignPlatform.Controllers
 
         }
 
-        // POST: Bead/Update/5
+        /// <summary>
+        /// Update the information of a specific bead to the system using the API
+        /// </summary>
+        /// <param name="id">The specific bead primary key</param>
+        /// <param name="bead">Bead class</param>
+        /// curl -d @bead.json -H "Content-type:application/json" https://localhost:44386/api/BeadData/UpdateBead/7
+        /// <returns>
+        /// Successful: redirect to List page
+        /// Fail: redirect to Error page
+        /// </returns>
+        /// POST: Bead/Update/5
         [HttpPost]
         public ActionResult Update(int id, Bead bead)
         {
@@ -141,7 +157,12 @@ namespace BeadKeychainDesignPlatform.Controllers
 
         }
 
-        // GET: Bead/Delete/5
+        /// <summary>
+        /// The MVC5 view called DeleteConfirm.cshtml to confirm with user whether they want to delete the selected bead
+        /// </summary>
+        /// <param name="id">The selected bead primary key</param>
+        /// <returns>send the confirm answer to Delete method</returns>
+        /// GET: Bead/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
             string url = "FindBead/" + id;
@@ -150,7 +171,15 @@ namespace BeadKeychainDesignPlatform.Controllers
             return View(selectedBead);
         }
 
-        // POST: Bead/Delete/5
+        /// <summary>
+        /// Delete the specific bead
+        /// </summary>
+        /// <param name="id">The selected bead primary key</param>
+        /// <returns>        
+        /// Successful: redirect to List page
+        /// Fail: redirect to Error page
+        /// </returns>
+        /// POST: Bead/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {
