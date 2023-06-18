@@ -77,7 +77,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// Update a specific bead colour in the system with POST Data input
         /// </summary>
         /// <param name="id">The primary key of the specific bead colour</param>
-        /// <param name="bead">JSON FORM DATA of a bead colour</param>
+        /// <param name="beadColour">JSON FORM DATA of a bead colour</param>
         /// <returns>
         /// HEADER: 204 (Success, No Content Response)
         /// or
@@ -136,10 +136,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// <summary>
         /// Add a bead colour in the system
         /// </summary>
-        /// <param name="bead">JSON FORM DATA of a bead colour</param>
+        /// <param name="beadColour">JSON FORM DATA of a bead colour</param>
         /// <returns>
         /// Header: 201(Created)
-        /// Content: BeadId, Bead Data 
+        /// Content: BeadColourId, BeadColour Data 
         /// or
         /// Header: 400 (Bad Request)
         /// </returns>

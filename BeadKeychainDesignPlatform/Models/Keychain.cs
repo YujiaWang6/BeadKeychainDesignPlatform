@@ -16,4 +16,10 @@ namespace BeadKeychainDesignPlatform.Models
         //A keychain can have many beads
         public ICollection<Bead> Beads { get; set; }
     }
+
+    public class KeychainDto
+    {
+        public int KeychainId { get; set; }
+        public string KeychainName { get; set; }
+    }
 }
