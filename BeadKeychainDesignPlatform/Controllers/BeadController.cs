@@ -63,6 +63,8 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// GET: Bead/New
         public ActionResult New()
         {
+            //information about all colours in the system.
+            
             return View();
         }
 

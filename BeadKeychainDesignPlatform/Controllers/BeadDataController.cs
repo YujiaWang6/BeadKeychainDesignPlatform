@@ -108,6 +108,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// COMMAND WINDOW: curl -d @beadupdate.json -H "Content-type:application/json" https://localhost:44386/api/BeadData/UpdateBead/7
         /// </example>
         [ResponseType(typeof(void))]
+        [HttpPost]
         public IHttpActionResult UpdateBead(int id, Bead bead)
         {
             if (!ModelState.IsValid)
@@ -192,6 +193,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// <example>
         /// Post: api/BeadData/DeleteBead/5
+        /// curl -d "" "https://localhost:44386/api/BeadData/DeleteBead/5"
         /// Form data: (empty)
         /// </example>
         [HttpPost]
