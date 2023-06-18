@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Net.Http;
 using BeadKeychainDesignPlatform.Models;
 using System.Web.Script.Serialization;
+using BeadKeychainDesignPlatform.Models.ViewModels;
+using System.Diagnostics;
 
 namespace BeadKeychainDesignPlatform.Controllers
 {
@@ -106,44 +108,65 @@ namespace BeadKeychainDesignPlatform.Controllers
         // GET: Bead/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            //UpdateBead ViewModel = new UpdateBead();
+
+            //existing bead information
+            string url = "FindBead/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            BeadDto specificBead = response.Content.ReadAsAsync<BeadDto>().Result;
+            return View(specificBead);
+
         }
 
-        // POST: Bead/Edit/5
+        // POST: Bead/Update/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Update(int id, Bead bead)
         {
-            try
-            {
-                // TODO: Add update logic here
+            
+            string url = "UpdateBead/" + id;
+            string jsonpayload = jss.Serialize(bead);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            HttpContent content = new StringContent(jsonpayload);
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+            Debug.WriteLine(content);
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                return RedirectToAction("List");
             }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+
         }
 
         // GET: Bead/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteConfirm(int id)
         {
-            return View();
+            string url = "FindBead/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            BeadDto selectedBead = response.Content.ReadAsAsync<BeadDto>().Result;
+            return View(selectedBead);
         }
 
         // POST: Bead/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            string url = "DeleteBead/" + id;
 
-                return RedirectToAction("Index");
-            }
-            catch
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Error");
             }
         }
     }

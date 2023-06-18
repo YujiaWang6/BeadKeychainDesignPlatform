@@ -2,7 +2,15 @@
 @{
     ViewBag.Title = "Details";
 }
-<a href="/Bead/List">Back to all the beads</a>
+<div>
+    <a href="/Bead/List">Back to all the beads</a>
+</div>
+<div>
+    <a href="/Bead/Edit/@Model.BeadId">Update</a>
+</div>
+<div>
+    <a style="color:#ab2020;" href="/Bead/DeleteConfirm/@Model.BeadId">Delete</a>
+</div>
 <h2>@Model.BeadName</h2>
 <p>Description: @Model.BeadDescription</p>
 <p>Colour: @Model.ColourName</p>
