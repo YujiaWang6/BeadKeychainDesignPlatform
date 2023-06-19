@@ -73,6 +73,38 @@ namespace BeadKeychainDesignPlatform.Controllers
             return Ok(KeychainDtos);
         }
 
+
+
+        /// <summary>
+        /// Returns all the keychains NOT contain a specific bead.
+        /// </summary>
+        /// <param name="id">Bead primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all keychains in the database that NOT contain a particular bead
+        /// </returns>
+        /// <example>
+        /// GET: api/KeychainData/ListKeychainsNotIncludeBead/3
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(KeychainDto))]
+        public IHttpActionResult ListKeychainsNotIncludeBead(int id)
+        {
+            List<Keychain> Keychains = db.Keychains.Where(
+                k => !k.Beads.Any(
+                    b => b.BeadId == id)
+                ).ToList();
+            List<KeychainDto> KeychainDtos = new List<KeychainDto>();
+
+            Keychains.ForEach(k => KeychainDtos.Add(new KeychainDto()
+            {
+                KeychainId = k.KeychainId,
+                KeychainName = k.KeychainName
+            }));
+
+            return Ok(KeychainDtos);
+        }
+
         /// <summary>
         /// Return the properties of one specific chosen bead in the system
         /// </summary>

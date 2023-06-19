@@ -63,8 +63,53 @@ namespace BeadKeychainDesignPlatform.Controllers
             IEnumerable<KeychainDto> associatedKeychain= response.Content.ReadAsAsync<IEnumerable< KeychainDto >>().Result;
             ViewModels.associatedKeychain= associatedKeychain;
 
+            //show aviliable keychains
+            url = "KeychainData/ListKeychainsNotIncludeBead/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<KeychainDto> aviliableKeychain = response.Content.ReadAsAsync<IEnumerable<KeychainDto>>().Result;
+            ViewModels.aviliableKeychain = aviliableKeychain;
+
+
             return View(ViewModels);
         }
+
+
+
+        //POST: Bead/Associate/{beadid}
+        [HttpPost]
+        public ActionResult Associate(int id, int keychainid)
+        {
+            //Debug.WriteLine("beadid: " + id + "keychainid: " + keychainid);
+
+            //call api to aassociate the bead with keychain
+            string url = "BeadData/AssociateBeadsWithKeychain/" + id + "/" + keychainid;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            return RedirectToAction("Details/" + id);
+        }
+
+
+
+
+        //Get: Bead/UnAssociate/{beadid}?KeychainId={keychainid}
+        [HttpGet]
+        public ActionResult UnAssociate(int id, int keychainid)
+        {
+            //Debug.WriteLine("beadid: " + id + "keychainid: " + keychainid);
+
+            //call api to aassociate the bead with keychain
+            string url = "BeadData/RemoveBeadsWithKeychain/" + id + "/" + keychainid;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            return RedirectToAction("Details/" + id);
+        }
+
+
+
 
         /// <summary>
         /// The MVC5 view called New.cshtml has a form to collect data for creating a new bead

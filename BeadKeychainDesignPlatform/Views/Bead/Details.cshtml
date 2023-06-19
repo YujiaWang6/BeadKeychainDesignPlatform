@@ -21,5 +21,20 @@
     @foreach(var keychain in Model.associatedKeychain)
             {
                 <a href="/Keychain/Details/@keychain.KeychainId">@keychain.KeychainName</a>
+                <a href="/Bead/UnAssociate/@Model.specificBead.BeadId?KeychainId=@keychain.KeychainId">[x]</a>
             }
+    
+    <div>
+        <h2>Add this @Model.specificBead.BeadName to another keychain</h2>
+        <form action="/Bead/Associate/@Model.specificBead.BeadId" method="POST">
+            <select name="KeychainId">
+                @foreach (var keychain in Model.aviliableKeychain)
+                {
+                    <option value="@keychain.KeychainId">@keychain.KeychainName</option>
+                }
+
+            </select>
+            <input type="submit" value="Add to Keychain" />
+        </form>
+    </div>
 </div>

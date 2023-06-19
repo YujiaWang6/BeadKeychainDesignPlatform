@@ -115,6 +115,74 @@ namespace BeadKeychainDesignPlatform.Controllers
         }
 
         /// <summary>
+        /// Associate a particular keychain with a particular bead
+        /// </summary>
+        /// <param name="beadid">The bead id primary key</param>
+        /// <param name="keychainid">The keychain id primary key</param>
+        /// <returns>
+        /// HEADER: 200(OK)
+        /// or
+        /// HEADER: 404(NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// POST: api/BeadData/AssociateBeadsWithKeychain/{beadid}/{keychainid}
+        /// curl -d "" -v https://localhost:44386/api/BeadData/AssociateBeadsWithKeychain/3/4
+        /// </example>
+        [HttpPost]
+        [Route("api/BeadData/AssociateBeadsWithKeychain/{beadid}/{keychainid}")]
+        public IHttpActionResult AssociateBeadsWithKeychain(int beadid, int keychainid)
+        {
+            Bead SelectedBead = db.Beads.Include(b=>b.Keychains).Where(b=>b.BeadId==beadid).FirstOrDefault();
+            Keychain SelectedKeychain = db.Keychains.Find(keychainid);
+
+            if(SelectedBead==null || SelectedKeychain == null)
+            {
+                return NotFound();
+            };
+
+            SelectedBead.Keychains.Add(SelectedKeychain);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
+
+
+
+        /// <summary>
+        /// remove an association between a particular keychain and a particular bead
+        /// </summary>
+        /// <param name="beadid">The bead id primary key</param>
+        /// <param name="keychainid">The keychain id primary key</param>
+        /// <returns>
+        /// HEADER: 200(OK)
+        /// or
+        /// HEADER: 404(NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// POST: api/BeadData/RemoveBeadsWithKeychain/{beadid}/{keychainid}
+        /// curl -d "" -v https://localhost:44386/api/BeadData/RemoveBeadsWithKeychain/3/4
+        /// </example>
+        [HttpPost]
+        [Route("api/BeadData/RemoveBeadsWithKeychain/{beadid}/{keychainid}")]
+        public IHttpActionResult RemoveBeadsWithKeychain(int beadid, int keychainid)
+        {
+            Bead SelectedBead = db.Beads.Include(b => b.Keychains).Where(b => b.BeadId == beadid).FirstOrDefault();
+            Keychain SelectedKeychain = db.Keychains.Find(keychainid);
+
+            if (SelectedBead == null || SelectedKeychain == null)
+            {
+                return NotFound();
+            };
+
+            SelectedBead.Keychains.Remove(SelectedKeychain);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
+
+        /// <summary>
         /// Return the properties of one specific chosen bead in the system
         /// </summary>
         /// <param name="id">The BeadId of that chosen bead</param>

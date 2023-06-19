@@ -12,5 +12,7 @@ namespace BeadKeychainDesignPlatform.Models.ViewModels
         public IEnumerable<KeychainDto> associatedKeychain { get; set; }    
 
 
+        public IEnumerable<KeychainDto> aviliableKeychain { get; set; }
+
     }
 }
