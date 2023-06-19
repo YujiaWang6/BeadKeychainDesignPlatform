@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<BeadKeychainDesignPlatform.Models.BeadColourDto>
 @{
     ViewBag.Title = "New";
 }
@@ -15,7 +15,14 @@
     </div>
     <div>
         <label>Bead Colour Id:</label>
-        <input name="ColourId" type="number" />
+        <select name="ColourId">
+            <option disabled selected>--Choose the colour--</option>
+            @foreach (var colour in @Model)
+            {
+                <option value="@colour.ColourId">@colour.ColourProperty @colour.ColourName</option>
+
+            }
+        </select>
     </div>
     <div>
         <label>Bead Picture:</label>

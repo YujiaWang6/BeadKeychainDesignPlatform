@@ -1,30 +1,37 @@
-﻿@model BeadKeychainDesignPlatform.Models.BeadDto
+﻿@model BeadKeychainDesignPlatform.Models.ViewModels.UpdateBead
 @{
     ViewBag.Title = "Edit";
 }
 
 <h2>Update Bead</h2>
 
-<form action="/Bead/Update/@Model.BeadId" method="POST">
+<form action="/Bead/Update/@Model.SelectedBead.BeadId" method="POST">
     <div style="display:none;">
         @* Pass through the bead ID *@
-        <input type="text" name="BeadId" value="@Model.BeadId" />
+        <input type="text" name="BeadId" value="@Model.SelectedBead.BeadId" />
     </div>
     <div>
         <label>Bead Name:</label>
-        <input name="BeadName" type="text" value="@Model.BeadName" />
+        <input name="BeadName" type="text" value="@Model.SelectedBead.BeadName" />
     </div>
     <div>
         <label>Bead Description:</label>
-        <input name="BeadDescription" type="text" value="@Model.BeadDescription" />
+        <input name="BeadDescription" type="text" value="@Model.SelectedBead.BeadDescription" />
     </div>
     <div>
         <label>Bead Colour Id:</label>
-        <input name="ColourId" type="number" value="@Model.ColourName" />
+        <select name="ColourId">
+            <option disabled selected>--Choose the colour--</option>
+            @foreach (var colour in @Model.beadcoloursOptions)
+            {
+                <option value="@colour.ColourId">@colour.ColourProperty @colour.ColourName</option>
+
+            }
+        </select>
     </div>
     <div>
         <label>Bead Picture:</label>
-        <input name="BeadPicture" type="text" value="@Model.BeadPicture" />
+        <input name="BeadPicture" type="text" value="@Model.SelectedBead.BeadPicture" />
     </div>
     <div>
         <input type="submit" value="Update Bead" />

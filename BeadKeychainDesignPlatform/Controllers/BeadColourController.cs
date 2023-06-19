@@ -7,6 +7,7 @@ using System.Net.Http;
 using BeadKeychainDesignPlatform.Models;
 using System.Web.Script.Serialization;
 using System.Diagnostics;
+using BeadKeychainDesignPlatform.Models.ViewModels;
 
 
 namespace BeadKeychainDesignPlatform.Controllers
@@ -18,7 +19,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         static BeadColourController()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44386/api/BeadColourData/");
+            client.BaseAddress = new Uri("https://localhost:44386/api/");
         }
         private JavaScriptSerializer jss = new JavaScriptSerializer();
 
@@ -32,7 +33,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         public ActionResult List()
         {
-            string url = "ListBeadColours";
+            string url = "BeadColourData/ListBeadColours";
             HttpResponseMessage response = client.GetAsync(url).Result;
             IEnumerable<BeadColourDto> beadcolours = response.Content.ReadAsAsync<IEnumerable<BeadColourDto>>().Result;
 
@@ -51,9 +52,18 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         public ActionResult Details(int id)
         {
-            string url = "FindBeadColour/" + id;
+            DetailsBeadColour ViewModels = new DetailsBeadColour();
+
+            string url = "BeadColourData/FindBeadColour/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             BeadColourDto specificColour = response.Content.ReadAsAsync<BeadColourDto>().Result;
+            ViewModels.specificColour = specificColour;
+
+            //showcase information about beads related to this colour
+            //Send a request to gather information about beads related to a particular colour ID
+
+            //ViewModels.relatedBeads = relatedBeads;
+
             return View(specificColour);
         }
 
@@ -83,7 +93,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         {
 
 
-            string url = "AddBeadColour";
+            string url = "BeadColourData/AddBeadColour";
             string jsonpayload = jss.Serialize(beadColour);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -118,7 +128,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// GET: BeadColour/Edit/{id}
         public ActionResult Edit(int id)
         {
-            string url = "FindBeadColour/" + id;
+            string url = "BeadColourData/FindBeadColour/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             BeadColourDto specificColour = response.Content.ReadAsAsync<BeadColourDto>().Result;
             return View(specificColour);
@@ -140,7 +150,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         public ActionResult Update(int id, BeadColour beadColour)
         {
 
-            string url = "UpdateBeadColour/"+id;
+            string url = "BeadColourData/UpdateBeadColour/" + id;
             string jsonpayload = jss.Serialize(beadColour);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -166,7 +176,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// GET: BeadColour/Delete/{id}
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "FindBeadColour/" + id;
+            string url = "BeadColourData/FindBeadColour/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             BeadColourDto selectedBeadColour = response.Content.ReadAsAsync<BeadColourDto>().Result;
             return View(selectedBeadColour);
@@ -185,7 +195,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            string url = "DeleteBeadColour/" + id;
+            string url = "BeadColourData/DeleteBeadColour/" + id;
 
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
