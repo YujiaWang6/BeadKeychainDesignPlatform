@@ -1,4 +1,4 @@
-﻿@model BeadKeychainDesignPlatform.Models.BeadDto
+﻿@model BeadKeychainDesignPlatform.Models.ViewModels.DetailsBead
 @{
     ViewBag.Title = "Details";
 }
@@ -6,13 +6,20 @@
     <a href="/Bead/List">Back to all the beads</a>
 </div>
 <div>
-    <a href="/Bead/Edit/@Model.BeadId">Update</a>
+    <a href="/Bead/Edit/@Model.specificBead.BeadId">Update</a>
 </div>
 <div>
-    <a style="color:#ab2020;" href="/Bead/DeleteConfirm/@Model.BeadId">Delete</a>
+    <a style="color:#ab2020;" href="/Bead/DeleteConfirm/@Model.specificBead.BeadId">Delete</a>
 </div>
-<h2>@Model.BeadName</h2>
-<p>Description: @Model.BeadDescription</p>
-<p>Colour: @Model.ColourName</p>
-<p>Colour Property: @Model.ColourProperty</p>
+<h2>@Model.specificBead.BeadName</h2>
+<p>Description: @Model.specificBead.BeadDescription</p>
+<p>Colour: @Model.specificBead.ColourName</p>
+<p>Colour Property: @Model.specificBead.ColourProperty</p>
 
+<div>
+    <h2>This bead is in these keychains </h2>
+    @foreach(var keychain in Model.associatedKeychain)
+            {
+                <a href="/Keychain/Details/@keychain.KeychainId">@keychain.KeychainName</a>
+            }
+</div>

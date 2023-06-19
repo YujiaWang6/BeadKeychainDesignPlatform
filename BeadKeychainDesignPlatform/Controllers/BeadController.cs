@@ -50,10 +50,20 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         public ActionResult Details(int id)
         {
+            DetailsBead ViewModels= new DetailsBead();
+
             string url = "BeadData/FindBead/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             BeadDto specificBead = response.Content.ReadAsAsync<BeadDto>().Result;
-            return View(specificBead);
+            ViewModels.specificBead = specificBead;
+
+            //show associated keychains with this specific bead
+            url = "KeychainData/ListKeychainsForBead/"+id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<KeychainDto> associatedKeychain= response.Content.ReadAsAsync<IEnumerable< KeychainDto >>().Result;
+            ViewModels.associatedKeychain= associatedKeychain;
+
+            return View(ViewModels);
         }
 
         /// <summary>

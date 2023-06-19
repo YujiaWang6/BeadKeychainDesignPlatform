@@ -21,7 +21,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         static KeychainController()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44386/api/KeychainData/");
+            client.BaseAddress = new Uri("https://localhost:44386/api/");
         }
         private JavaScriptSerializer jss = new JavaScriptSerializer();
 
@@ -36,7 +36,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         public ActionResult List()
         {
-            string url = "ListKeychains";
+            string url = "KeychainData/ListKeychains";
             HttpResponseMessage response = client.GetAsync(url).Result;
             IEnumerable<KeychainDto> keychains = response.Content.ReadAsAsync<IEnumerable<KeychainDto>>().Result;
 
@@ -54,10 +54,21 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         public ActionResult Details(int id)
         {
-            string url = "FindKeychain/" + id;
+            DetailsKeychain ViewModels= new DetailsKeychain();
+
+            string url = "KeychainData/FindKeychain/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             KeychainDto specificKeychain = response.Content.ReadAsAsync<KeychainDto>().Result;
-            return View(specificKeychain);
+            ViewModels.specificKeychain = specificKeychain;
+
+
+            //also show all the beads under this keychian
+            url = "BeadData/ListBeadsForKeychain/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<BeadDto> beadsInKeychain = response.Content.ReadAsAsync<IEnumerable<BeadDto>>().Result;
+            ViewModels.beadsInKeychain = beadsInKeychain;
+
+            return View(ViewModels);
         }
 
 
@@ -85,7 +96,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         [HttpPost]
         public ActionResult Create(Keychain keychain)
         {
-            string url = "AddKeychain";
+            string url = "KeychainData/AddKeychain";
             string jsonpayload = jss.Serialize(keychain);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -121,7 +132,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// GET: Keychain/Edit/{id}
         public ActionResult Edit(int id)
         {
-            string url = "FindKeychain/" + id;
+            string url = "KeychainData/FindKeychain/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             KeychainDto specificKeychain = response.Content.ReadAsAsync<KeychainDto>().Result;
             return View(specificKeychain);
@@ -141,7 +152,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         [HttpPost]
         public ActionResult Update(int id, Keychain keychain)
         {
-            string url = "UpdateKeychain/"+id;
+            string url = "KeychainData/UpdateKeychain/" + id;
             string jsonpayload = jss.Serialize(keychain);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -167,7 +178,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// GET: Keychain/Delete/{id}
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "FindKeychain/" + id;
+            string url = "KeychainData/FindKeychain/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             KeychainDto selectedKeychain = response.Content.ReadAsAsync<KeychainDto>().Result;
             return View(selectedKeychain);
@@ -187,7 +198,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            string url = "DeleteKeychain/"+id;
+            string url = "KeychainData/DeleteKeychain/" + id;
 
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

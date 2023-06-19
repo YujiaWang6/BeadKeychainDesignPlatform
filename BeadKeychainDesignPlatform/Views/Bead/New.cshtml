@@ -17,7 +17,7 @@
         <label>Bead Colour Id:</label>
         <select name="ColourId">
             <option disabled selected>--Choose the colour--</option>
-            @foreach (var colour in @Model)
+            @foreach (var colour in Model)
             {
                 <option value="@colour.ColourId">@colour.ColourProperty @colour.ColourName</option>
 

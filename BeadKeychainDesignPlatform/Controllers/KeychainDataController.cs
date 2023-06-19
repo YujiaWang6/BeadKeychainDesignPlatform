@@ -43,7 +43,35 @@ namespace BeadKeychainDesignPlatform.Controllers
         }
 
 
+        /// <summary>
+        /// Returns all the keychains contain a specific bead.
+        /// </summary>
+        /// <param name="id">Bead primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all keychains in the database that contain a particular bead
+        /// </returns>
+        /// <example>
+        /// GET: api/KeychainData/ListKeychainsForBead/3
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(KeychainDto))]
+        public IHttpActionResult ListKeychainsForBead(int id)
+        {
+            List<Keychain> Keychains = db.Keychains.Where(
+                k=>k.Beads.Any(
+                    b=>b.BeadId==id)
+                ).ToList();
+            List<KeychainDto> KeychainDtos = new List<KeychainDto>();
 
+            Keychains.ForEach(k => KeychainDtos.Add(new KeychainDto()
+            {
+                KeychainId = k.KeychainId,
+                KeychainName = k.KeychainName
+            }));
+
+            return Ok(KeychainDtos);
+        }
 
         /// <summary>
         /// Return the properties of one specific chosen bead in the system

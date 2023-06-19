@@ -46,7 +46,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </summary>
         /// <param name="id">Primary key of a specific bead colour</param>
         /// <returns>The information of that specific bead colour</returns>
-        /// curl: https://localhost:44386/api/BeadData/FindBead/{id}
+        /// curl: https://localhost:44386/api/BeadColourData/FindBeadColour/{id}
         ///<example>
         /// GET: BeadColour/Details/{id}
         /// </example>
@@ -61,10 +61,12 @@ namespace BeadKeychainDesignPlatform.Controllers
 
             //showcase information about beads related to this colour
             //Send a request to gather information about beads related to a particular colour ID
+            url = "BeadData/ListBeadsForColour/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<BeadDto> relatedBeads = response.Content.ReadAsAsync<IEnumerable<BeadDto>>().Result;
+            ViewModels.relatedBeads = relatedBeads;
 
-            //ViewModels.relatedBeads = relatedBeads;
-
-            return View(specificColour);
+            return View(ViewModels);
         }
 
 

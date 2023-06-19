@@ -47,6 +47,73 @@ namespace BeadKeychainDesignPlatform.Controllers
         }
 
 
+
+        /// <summary>
+        /// Gather information about all the beads related to a particular colour.
+        /// </summary>
+        /// <returns>
+        /// All the beads in the system with the properties of beads and also the colour and colour property of the beads match with the particular colour ID
+        /// </returns>
+        /// <param name="id">Colour ID</param>
+        /// <example>
+        /// GET: api/BeadData/ListBeadsForColour/1
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(BeadDto))]
+        public IHttpActionResult ListBeadsForColour(int id)
+        {
+            List<Bead> Beads = db.Beads.Where(b=>b.ColourId==id).ToList();
+            List<BeadDto> BeadDtos = new List<BeadDto>();
+
+            Beads.ForEach(b => BeadDtos.Add(new BeadDto()
+            {
+                BeadId = b.BeadId,
+                BeadDescription = b.BeadDescription,
+                BeadName = b.BeadName,
+                BeadPicture = b.BeadPicture,
+                ColourName = b.BeadColour.ColourName,
+                ColourProperty = b.BeadColour.ColourProperty
+            }));
+
+            return Ok(BeadDtos);
+        }
+
+
+
+        /// <summary>
+        /// Gather information about all the beads related to a particular keychain.
+        /// </summary>
+        /// <returns>
+        /// All the beads in the system with the properties of beads and also the colour and colour property of the beads that match to a particular keychain ID
+        /// </returns>
+        /// <param name="id">Keychain ID</param>
+        /// <example>
+        /// GET: api/BeadData/ListBeadsForKeychain/1
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(BeadDto))]
+        public IHttpActionResult ListBeadsForKeychain(int id)
+        {
+            //all beads that have keychians which match with the ID
+            List<Bead> Beads = db.Beads.Where(
+                b => b.Keychains.Any(
+                    k=>k.KeychainId == id
+                )).ToList();
+            List<BeadDto> BeadDtos = new List<BeadDto>();
+
+            Beads.ForEach(b => BeadDtos.Add(new BeadDto()
+            {
+                BeadId = b.BeadId,
+                BeadDescription = b.BeadDescription,
+                BeadName = b.BeadName,
+                BeadPicture = b.BeadPicture,
+                ColourName = b.BeadColour.ColourName,
+                ColourProperty = b.BeadColour.ColourProperty
+            }));
+
+            return Ok(BeadDtos);
+        }
+
         /// <summary>
         /// Return the properties of one specific chosen bead in the system
         /// </summary>
