@@ -1,0 +1,13 @@
+﻿@model BeadKeychainDesignPlatform.Models.BeadColourDto
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this bead?</h2>
+<a href="/BeadColour/List">Cancel</a>
+<div>Colour: @Model.ColourName</div>
+<div>Colour Property: @Model.ColourProperty</div>
+<form action="/BeadColour/Delete/@Model.ColourId" method="POST">
+    <input type="submit" value="Confirm Delete" />
+
+</form>

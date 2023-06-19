@@ -6,87 +6,89 @@ using System.Web.Mvc;
 using System.Net.Http;
 using BeadKeychainDesignPlatform.Models;
 using System.Web.Script.Serialization;
-using BeadKeychainDesignPlatform.Models.ViewModels;
 using System.Diagnostics;
+
 
 namespace BeadKeychainDesignPlatform.Controllers
 {
-    public class BeadController : Controller
+    public class BeadColourController : Controller
     {
         //code factoring
         private static readonly HttpClient client;
-        static BeadController()
+        static BeadColourController()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44386/api/BeadData/");
+            client.BaseAddress = new Uri("https://localhost:44386/api/BeadColourData/");
         }
         private JavaScriptSerializer jss = new JavaScriptSerializer();
 
         /// <summary>
-        /// Accessing information from bead api controller to get the list of all the beads
+        /// Accessing information from beadcolour api controller to get the list of all the bead colours
         /// </summary>
-        /// <returns>List of beads</returns>
-        /// url: https://localhost:44386/api/BeadData/ListBeads
+        /// <returns>List of bead colours</returns>
+        /// curl: https://localhost:44386/api/BeadColourData/ListBeadColours
         /// <example>
-        /// GET: Bead/List
+        /// GET: BeadColour/List
         /// </example>
         public ActionResult List()
         {
-            string url = "ListBeads";
-            HttpResponseMessage response = client.GetAsync(url).Result; 
-            IEnumerable<BeadDto> beads = response.Content.ReadAsAsync<IEnumerable<BeadDto>>().Result;
+            string url = "ListBeadColours";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IEnumerable<BeadColourDto> beadcolours = response.Content.ReadAsAsync<IEnumerable<BeadColourDto>>().Result;
 
-            return View(beads);
+            return View(beadcolours);
         }
 
+
         /// <summary>
-        /// Accessing information from bead api controller to get the information of a specific bead
+        /// Accessing information from beadColour api controller to get the information of a specific bead colour
         /// </summary>
-        /// <param name="id">Primary key of a specific bead</param>
-        /// <returns>The information of that specific bead</returns>
-        /// url: https://localhost:44386/api/BeadData/FindBead/{id}
+        /// <param name="id">Primary key of a specific bead colour</param>
+        /// <returns>The information of that specific bead colour</returns>
+        /// curl: https://localhost:44386/api/BeadData/FindBead/{id}
         ///<example>
-        /// GET: Bead/Details/{id}
+        /// GET: BeadColour/Details/{id}
         /// </example>
         public ActionResult Details(int id)
         {
-            string url = "FindBead/"+id;
+            string url = "FindBeadColour/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            BeadDto specificBead = response.Content.ReadAsAsync<BeadDto>().Result;
-            return View(specificBead);
+            BeadColourDto specificColour = response.Content.ReadAsAsync<BeadColourDto>().Result;
+            return View(specificColour);
         }
 
+
         /// <summary>
-        /// The MVC5 view called New.cshtml has a form to collect data for creating a new bead
+        /// The MVC5 view called New.cshtml has a form to collect data for creating a new bead colour
         /// </summary>
         /// <returns>Send collected data to Create Method</returns>
-        /// GET: Bead/New
+        /// GET: BeadColour/New
         public ActionResult New()
         {
-            //information about all colours in the system.
-            
             return View();
         }
 
         /// <summary>
-        /// Add a new bead to the system using the API
+        /// Add a new bead colour to the system using the API
         /// </summary>
-        /// <param name="bead">Bead class</param>
-        /// curl -d @bead.json -H "Content-type:application/json" https://localhost:44386/api/BeadData/AddBead   
+        /// <param name="beadColour">BeadColour class</param>
+        /// curl -d @beadcolour.json -H "Content-type:application/json" https://localhost:44386/api/BeadColourData/AddBeadColour  
         /// <returns>
         /// Successful: redirect to List page
         /// Fail: redirect to Error page
         /// </returns>
-        /// POST: Bead/Create
+        /// POST: BeadColour/Create
         [HttpPost]
-        public ActionResult Create(Bead bead)
+        public ActionResult Create(BeadColour beadColour)
         {
-            string url = "AddBead";
-            string jsonpayload = jss.Serialize(bead);
+
+
+            string url = "AddBeadColour";
+            string jsonpayload = jss.Serialize(beadColour);
 
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
-            HttpResponseMessage response = client.PostAsync(url,content).Result;
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -96,58 +98,55 @@ namespace BeadKeychainDesignPlatform.Controllers
             {
                 return RedirectToAction("Error");
             }
+
         }
 
         /// <summary>
         /// The MVC5 view called Error.cshtml will hold error message
         /// </summary>
-        /// GET: Bead/Error
+        /// GET: BeadColour/Error
         public ActionResult Error()
         {
             return View();
         }
 
-
         /// <summary>
-        /// The MVC5 view called Edit.cshtml has a form to collect the updating data for a sepcific bead.
+        /// The MVC5 view called Edit.cshtml has a form to collect the updating data for a sepcific bead colour.
         /// </summary>
-        /// <param name="id">The specific bead primary key</param>
+        /// <param name="id">The specific bead colour primary key</param>
         /// <returns>Send collected data to Update Method</returns>
-        /// GET: Bead/Edit/5
+        /// GET: BeadColour/Edit/5
         public ActionResult Edit(int id)
         {
-            //UpdateBead ViewModel = new UpdateBead();
-
-            //existing bead information
-            string url = "FindBead/" + id;
+            string url = "FindBeadColour/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            BeadDto specificBead = response.Content.ReadAsAsync<BeadDto>().Result;
-            return View(specificBead);
-
+            BeadColourDto specificColour = response.Content.ReadAsAsync<BeadColourDto>().Result;
+            return View(specificColour);
         }
 
+
         /// <summary>
-        /// Update the information of a specific bead to the system using the API
+        /// Update the information of a specific bead colour to the system using the API
         /// </summary>
-        /// <param name="id">The specific bead primary key</param>
-        /// <param name="bead">Bead class</param>
-        /// curl -d @beadupdate.json -H "Content-type:application/json" https://localhost:44386/api/BeadData/UpdateBead/7
+        /// <param name="id">The specific bead colour primary key</param>
+        /// <param name="beadColour">BeadColour class</param>
+        /// curl -d @beadcolourupdate.json -H "Content-type:application/json" https://localhost:44386/api/BeadColourData/UpdateBeadColour/3
         /// <returns>
         /// Successful: redirect to List page
         /// Fail: redirect to Error page
         /// </returns>
-        /// POST: Bead/Update/5
+        /// POST: BeadColour/Update/5
         [HttpPost]
-        public ActionResult Update(int id, Bead bead)
+        public ActionResult Update(int id, BeadColour beadColour)
         {
-            
-            string url = "UpdateBead/" + id;
-            string jsonpayload = jss.Serialize(bead);
+
+            string url = "UpdateBeadColour/"+id;
+            string jsonpayload = jss.Serialize(beadColour);
 
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
-            Debug.WriteLine(content);
+
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("List");
@@ -156,36 +155,37 @@ namespace BeadKeychainDesignPlatform.Controllers
             {
                 return RedirectToAction("Error");
             }
-
         }
 
+
         /// <summary>
-        /// The MVC5 view called DeleteConfirm.cshtml to confirm with user whether they want to delete the selected bead
+        /// The MVC5 view called DeleteConfirm.cshtml to confirm with user whether they want to delete the selected bead colour
         /// </summary>
-        /// <param name="id">The selected bead primary key</param>
+        /// <param name="id">The selected bead colour primary key</param>
         /// <returns>send the confirm answer to Delete method</returns>
-        /// GET: Bead/Delete/5
+        /// GET: BeadColour/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "FindBead/" + id;
+            string url = "FindBeadColour/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            BeadDto selectedBead = response.Content.ReadAsAsync<BeadDto>().Result;
-            return View(selectedBead);
+            BeadColourDto selectedBeadColour = response.Content.ReadAsAsync<BeadColourDto>().Result;
+            return View(selectedBeadColour);
         }
 
+
         /// <summary>
-        /// Delete the specific bead
+        /// Delete the specific bead colour
         /// </summary>
-        /// <param name="id">The selected bead primary key</param>
+        /// <param name="id">The selected bead colour primary key</param>
         /// <returns>        
         /// Successful: redirect to List page
         /// Fail: redirect to Error page
         /// </returns>
-        /// POST: Bead/Delete/5
+        /// POST: BeadColour/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            string url = "DeleteBead/" + id;
+            string url = "DeleteBeadColour/" + id;
 
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

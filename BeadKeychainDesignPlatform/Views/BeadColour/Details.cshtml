@@ -1,0 +1,17 @@
+﻿@model BeadKeychainDesignPlatform.Models.BeadColourDto
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <a href="/BeadColour/List">Back to all the beads</a>
+</div>
+<div>
+    <a href="/BeadColour/Edit/@Model.ColourId">Update</a>
+</div>
+<div>
+    <a style="color:#ab2020;" href="/BeadColour/DeleteConfirm/@Model.ColourId">Delete</a>
+</div>
+
+<h2>@Model.ColourProperty @Model.ColourName</h2>
+

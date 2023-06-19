@@ -182,6 +182,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BeadColourController.cs" />
     <Compile Include="Controllers\BeadColourDataController.cs" />
     <Compile Include="Controllers\BeadController.cs" />
     <Compile Include="Controllers\BeadDataController.cs" />
@@ -276,6 +277,12 @@
     <Content Include="Views\Bead\Error.cshtml" />
     <Content Include="Views\Bead\Edit.cshtml" />
     <Content Include="Views\Bead\DeleteConfirm.cshtml" />
+    <Content Include="Views\BeadColour\List.cshtml" />
+    <Content Include="Views\BeadColour\Details.cshtml" />
+    <Content Include="Views\BeadColour\New.cshtml" />
+    <Content Include="Views\BeadColour\Error.cshtml" />
+    <Content Include="Views\BeadColour\Edit.cshtml" />
+    <Content Include="Views\BeadColour\DeleteConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

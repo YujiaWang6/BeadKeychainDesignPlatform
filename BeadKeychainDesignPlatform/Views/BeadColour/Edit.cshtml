@@ -1,0 +1,25 @@
+﻿@model BeadKeychainDesignPlatform.Models.BeadColourDto
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Bead Colour</h2>
+
+<form action="/BeadColour/Update/@Model.ColourId" method="POST">
+    <div style="display:none;">
+        @* Pass through the bead ID *@
+        <input type="text" name="ColourId" value="@Model.ColourId" />
+    </div>
+    <div>
+        <label>Colour Name:</label>
+        <input name="ColourName" type="text" value="@Model.ColourName"/>
+    </div>
+    <div>
+        <label>Colour Property:</label>
+        <input name="ColourProperty" type="text" value="@Model.ColourProperty"/>
+    </div>
+    <div>
+        <input type="submit" value="Update Bead Colour" />
+    </div>
+
+</form>

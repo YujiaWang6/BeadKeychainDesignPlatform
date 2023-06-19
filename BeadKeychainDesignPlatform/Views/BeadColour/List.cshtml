@@ -1,0 +1,11 @@
+﻿@model IEnumerable<BeadKeychainDesignPlatform.Models.BeadColourDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of Bead Colours</h2>
+<a href="/BeadColour/New">New Bead Colour</a>
+@foreach (var beadcolour in Model)
+{
+    <h2><a href="/BeadColour/Details/@beadcolour.ColourId">@beadcolour.ColourProperty @beadcolour.ColourName</a></h2>
+}
