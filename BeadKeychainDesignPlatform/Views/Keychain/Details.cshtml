@@ -1,0 +1,15 @@
+﻿@model BeadKeychainDesignPlatform.Models.KeychainDto
+@{
+    ViewBag.Title = "Details";
+}
+<div>
+    <a href="/Keychain/List">Back to all the beads</a>
+</div>
+<div>
+    <a href="/Keychain/Edit/@Model.KeychainId">Update</a>
+</div>
+<div>
+    <a style="color:#ab2020;" href="/Keychain/DeleteConfirm/@Model.KeychainId">Delete</a>
+</div>
+<h2>@Model.KeychainName</h2>
+

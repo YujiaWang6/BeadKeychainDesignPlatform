@@ -187,6 +187,7 @@
     <Compile Include="Controllers\BeadController.cs" />
     <Compile Include="Controllers\BeadDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KeychainController.cs" />
     <Compile Include="Controllers\KeychainDataController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -283,6 +284,12 @@
     <Content Include="Views\BeadColour\Error.cshtml" />
     <Content Include="Views\BeadColour\Edit.cshtml" />
     <Content Include="Views\BeadColour\DeleteConfirm.cshtml" />
+    <Content Include="Views\Keychain\List.cshtml" />
+    <Content Include="Views\Keychain\Details.cshtml" />
+    <Content Include="Views\Keychain\New.cshtml" />
+    <Content Include="Views\Keychain\Error.cshtml" />
+    <Content Include="Views\Keychain\Edit.cshtml" />
+    <Content Include="Views\Keychain\DeleteConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

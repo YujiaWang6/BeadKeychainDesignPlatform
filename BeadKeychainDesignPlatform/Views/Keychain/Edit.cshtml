@@ -1,0 +1,21 @@
+﻿@model BeadKeychainDesignPlatform.Models.KeychainDto
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Keychain</h2>
+
+<form action="/Keychain/Update/@Model.KeychainId" method="POST">
+    <div style="display:none;">
+        @* Pass through the bead ID *@
+        <input type="text" name="KeychainId" value="@Model.KeychainId" />
+    </div>
+    <div>
+        <label>Keychain Name:</label>
+        <input name="KeychainName" type="text" value="@Model.KeychainName" />
+    </div>
+    <div>
+        <input type="submit" value="Update Keychain" />
+    </div>
+
+</form>

@@ -115,7 +115,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </summary>
         /// <param name="id">The specific bead colour primary key</param>
         /// <returns>Send collected data to Update Method</returns>
-        /// GET: BeadColour/Edit/5
+        /// GET: BeadColour/Edit/{id}
         public ActionResult Edit(int id)
         {
             string url = "FindBeadColour/" + id;
@@ -135,7 +135,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// Successful: redirect to List page
         /// Fail: redirect to Error page
         /// </returns>
-        /// POST: BeadColour/Update/5
+        /// POST: BeadColour/Update/{id}
         [HttpPost]
         public ActionResult Update(int id, BeadColour beadColour)
         {
@@ -163,7 +163,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </summary>
         /// <param name="id">The selected bead colour primary key</param>
         /// <returns>send the confirm answer to Delete method</returns>
-        /// GET: BeadColour/Delete/5
+        /// GET: BeadColour/Delete/{id}
         public ActionResult DeleteConfirm(int id)
         {
             string url = "FindBeadColour/" + id;
@@ -181,7 +181,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// Successful: redirect to List page
         /// Fail: redirect to Error page
         /// </returns>
-        /// POST: BeadColour/Delete/5
+        /// POST: BeadColour/Delete/{id}
         [HttpPost]
         public ActionResult Delete(int id)
         {

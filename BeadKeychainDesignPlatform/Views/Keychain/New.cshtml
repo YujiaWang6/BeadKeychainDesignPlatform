@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>Create a Keychain</h2>
+
+<form action="/Keychain/Create" method="POST">
+    <div>
+        <label>Keychain Name:</label>
+        <input name="KeychainName" type="text" />
+    </div>
+    <div>
+        <input type="submit" value="Add A Keychain" />
+    </div>
+
+</form>

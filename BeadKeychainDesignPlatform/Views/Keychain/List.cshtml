@@ -1,0 +1,11 @@
+﻿@model IEnumerable<BeadKeychainDesignPlatform.Models.KeychainDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of Keychain</h2>
+<a href="/Keychain/New">New Keychain</a>
+@foreach (var keychain in Model)
+{
+    <h2><a href="/Keychain/Details/@keychain.KeychainId">@keychain.KeychainName</a></h2>
+}
