@@ -161,6 +161,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         // PUT: api/KeychainData/UpdateKeychain/5
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult UpdateKeychain(int id, Keychain keychain)
         {
             if (!ModelState.IsValid)
@@ -217,6 +218,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// RETURN:{"KeychainId":3,"KeychainName":"Cat","Beads":null}
         /// </example>
         [ResponseType(typeof(Keychain))]
+        [Authorize]
         public IHttpActionResult AddKeychain(Keychain keychain)
         {
             if (!ModelState.IsValid)
@@ -247,6 +249,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(Keychain))]
+        [Authorize]
         public IHttpActionResult DeleteKeychain(int id)
         {
             Keychain keychain = db.Keychains.Find(id);

@@ -99,6 +99,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult UpdateBeadColour(int id, BeadColour beadColour)
         {
             if (!ModelState.IsValid)
@@ -157,6 +158,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(BeadColour))]
+        [Authorize]
         public IHttpActionResult AddBeadColour(BeadColour beadColour)
         {
             if (!ModelState.IsValid)
@@ -188,6 +190,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(BeadColour))]
+        [Authorize]
         public IHttpActionResult DeleteBeadColour(int id)
         {
             BeadColour beadColour = db.BeadsColours.Find(id);

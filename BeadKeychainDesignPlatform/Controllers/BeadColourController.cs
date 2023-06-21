@@ -18,10 +18,34 @@ namespace BeadKeychainDesignPlatform.Controllers
         private static readonly HttpClient client;
         static BeadColourController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44386/api/");
         }
         private JavaScriptSerializer jss = new JavaScriptSerializer();
+
+
+
+        private void GetApplicationCookie()
+        {
+            string token = "";
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
+        }
+
+
 
         /// <summary>
         /// Accessing information from beadcolour api controller to get the list of all the bead colours
@@ -75,6 +99,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </summary>
         /// <returns>Send collected data to Create Method</returns>
         /// GET: BeadColour/New
+        [Authorize]
         public ActionResult New()
         {
             return View();
@@ -91,10 +116,11 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// POST: BeadColour/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(BeadColour beadColour)
         {
 
-
+            GetApplicationCookie();
             string url = "BeadColourData/AddBeadColour";
             string jsonpayload = jss.Serialize(beadColour);
 
@@ -128,6 +154,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// <param name="id">The specific bead colour primary key</param>
         /// <returns>Send collected data to Update Method</returns>
         /// GET: BeadColour/Edit/{id}
+        [Authorize]
         public ActionResult Edit(int id)
         {
             string url = "BeadColourData/FindBeadColour/" + id;
@@ -149,9 +176,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// POST: BeadColour/Update/{id}
         [HttpPost]
+        [Authorize]
         public ActionResult Update(int id, BeadColour beadColour)
         {
-
+            GetApplicationCookie();
             string url = "BeadColourData/UpdateBeadColour/" + id;
             string jsonpayload = jss.Serialize(beadColour);
 
@@ -176,6 +204,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// <param name="id">The selected bead colour primary key</param>
         /// <returns>send the confirm answer to Delete method</returns>
         /// GET: BeadColour/Delete/{id}
+        [Authorize]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "BeadColourData/FindBeadColour/" + id;
@@ -195,8 +224,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// POST: BeadColour/Delete/{id}
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
+            GetApplicationCookie();
             string url = "BeadColourData/DeleteBeadColour/" + id;
 
             HttpContent content = new StringContent("");

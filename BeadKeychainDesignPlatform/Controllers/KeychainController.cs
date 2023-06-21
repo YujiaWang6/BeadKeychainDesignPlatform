@@ -20,10 +20,34 @@ namespace BeadKeychainDesignPlatform.Controllers
         private static readonly HttpClient client;
         static KeychainController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44386/api/");
         }
         private JavaScriptSerializer jss = new JavaScriptSerializer();
+
+
+
+
+
+        private void GetApplicationCookie()
+        {
+            string token = "";
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
+        }
 
 
         /// <summary>
@@ -78,6 +102,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </summary>
         /// <returns>Send collected data to Create Method</returns>
         /// GET: Keychain/Create
+        [Authorize]
         public ActionResult New()
         {
             return View();
@@ -94,8 +119,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// POST: Keychain/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Keychain keychain)
         {
+            GetApplicationCookie();
             string url = "KeychainData/AddKeychain";
             string jsonpayload = jss.Serialize(keychain);
 
@@ -130,6 +157,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// <param name="id">The specific keychain primary key</param>
         /// <returns>Send collected data to Update Method</returns>
         /// GET: Keychain/Edit/{id}
+        [Authorize]
         public ActionResult Edit(int id)
         {
             string url = "KeychainData/FindKeychain/" + id;
@@ -150,8 +178,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// POST: Keychain/Update/{id}
         [HttpPost]
+        [Authorize]
         public ActionResult Update(int id, Keychain keychain)
         {
+            GetApplicationCookie();
             string url = "KeychainData/UpdateKeychain/" + id;
             string jsonpayload = jss.Serialize(keychain);
 
@@ -176,6 +206,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// <param name="id">The selected keychain primary key</param>
         /// <returns>send the confirm answer to Delete method</returns>
         /// GET: Keychain/Delete/{id}
+        [Authorize]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "KeychainData/FindKeychain/" + id;
@@ -196,8 +227,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// POST: Keychain/Delete/{id}
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
+            GetApplicationCookie();
             string url = "KeychainData/DeleteKeychain/" + id;
 
             HttpContent content = new StringContent("");

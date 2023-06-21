@@ -130,6 +130,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         [HttpPost]
         [Route("api/BeadData/AssociateBeadsWithKeychain/{beadid}/{keychainid}")]
+        [Authorize]
         public IHttpActionResult AssociateBeadsWithKeychain(int beadid, int keychainid)
         {
             Bead SelectedBead = db.Beads.Include(b=>b.Keychains).Where(b=>b.BeadId==beadid).FirstOrDefault();
@@ -165,6 +166,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         [HttpPost]
         [Route("api/BeadData/RemoveBeadsWithKeychain/{beadid}/{keychainid}")]
+        [Authorize]
         public IHttpActionResult RemoveBeadsWithKeychain(int beadid, int keychainid)
         {
             Bead SelectedBead = db.Beads.Include(b => b.Keychains).Where(b => b.BeadId == beadid).FirstOrDefault();
@@ -244,6 +246,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult UpdateBead(int id, Bead bead)
         {
             if (!ModelState.IsValid)
@@ -303,6 +306,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(Bead))]
+        [Authorize]
         public IHttpActionResult AddBead(Bead bead)
         {
             if (!ModelState.IsValid)
@@ -333,6 +337,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </example>
         [HttpPost]
         [ResponseType(typeof(Bead))]
+        [Authorize]
         public IHttpActionResult DeleteBead(int id)
         {
             Bead bead = db.Beads.Find(id);

@@ -17,10 +17,37 @@ namespace BeadKeychainDesignPlatform.Controllers
         private static readonly HttpClient client;
         static BeadController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44386/api/");
         }
         private JavaScriptSerializer jss = new JavaScriptSerializer();
+
+
+        
+        private void GetApplicationCookie()
+        {
+            string token = "";
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+            Debug.WriteLine("Token Submitted is : " + token);
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
+        }
+        
+
+
+
 
         /// <summary>
         /// Accessing information from bead api controller to get the list of all the beads
@@ -77,8 +104,11 @@ namespace BeadKeychainDesignPlatform.Controllers
 
         //POST: Bead/Associate/{beadid}
         [HttpPost]
+        [Authorize]
         public ActionResult Associate(int id, int keychainid)
         {
+            //get token
+            GetApplicationCookie();
             //Debug.WriteLine("beadid: " + id + "keychainid: " + keychainid);
 
             //call api to aassociate the bead with keychain
@@ -95,8 +125,10 @@ namespace BeadKeychainDesignPlatform.Controllers
 
         //Get: Bead/UnAssociate/{beadid}?KeychainId={keychainid}
         [HttpGet]
+        [Authorize]
         public ActionResult UnAssociate(int id, int keychainid)
         {
+            GetApplicationCookie();
             //Debug.WriteLine("beadid: " + id + "keychainid: " + keychainid);
 
             //call api to aassociate the bead with keychain
@@ -116,8 +148,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </summary>
         /// <returns>Send collected data to Create Method</returns>
         /// GET: Bead/New
+        [Authorize]
         public ActionResult New()
         {
+            
             //information about all colours in the system.
             //GET api/BeadColour/List
             string url = "BeadColourData/ListBeadColours";
@@ -138,8 +172,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// POST: Bead/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Bead bead)
         {
+            //GetApplicationCookie();
             string url = "BeadData/AddBead";
             string jsonpayload = jss.Serialize(bead);
 
@@ -173,9 +209,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// <param name="id">The specific bead primary key</param>
         /// <returns>Send collected data to Update Method</returns>
         /// GET: Bead/Edit/{id}
+        [Authorize]
         public ActionResult Edit(int id)
         {
-
+            
             UpdateBead ViewModel = new UpdateBead();
 
             //existing bead information
@@ -209,9 +246,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// POST: Bead/Update/{id}
         [HttpPost]
+        [Authorize]
         public ActionResult Update(int id, Bead bead)
         {
-            
+            //GetApplicationCookie();
             string url = "BeadData/UpdateBead/" + id;
             string jsonpayload = jss.Serialize(bead);
 
@@ -236,6 +274,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// <param name="id">The selected bead primary key</param>
         /// <returns>send the confirm answer to Delete method</returns>
         /// GET: Bead/Delete/{id}
+        [Authorize]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "BeadData/FindBead/" + id;
@@ -254,8 +293,10 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// </returns>
         /// POST: Bead/Delete/{id}
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
+            //GetApplicationCookie();
             string url = "BeadData/DeleteBead/" + id;
 
             HttpContent content = new StringContent("");
