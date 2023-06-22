@@ -30,7 +30,9 @@ namespace BeadKeychainDesignPlatform.Controllers
         private JavaScriptSerializer jss = new JavaScriptSerializer();
 
 
-
+        /// <summary>
+        /// Grabs the authentication cookie sent to this controller.
+        /// </summary>
         private void GetApplicationCookie()
         {
             string token = "";

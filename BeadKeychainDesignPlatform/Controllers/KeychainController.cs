@@ -34,7 +34,9 @@ namespace BeadKeychainDesignPlatform.Controllers
 
 
 
-
+        /// <summary>
+        /// Grabs the authentication cookie sent to this controller.
+        /// </summary>
         private void GetApplicationCookie()
         {
             string token = "";
