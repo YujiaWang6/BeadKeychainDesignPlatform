@@ -2,39 +2,109 @@
 @{
     ViewBag.Title = "Details";
 }
-<div>
-    <a href="/Bead/List">Back to all the beads</a>
-</div>
-<div>
-    <a href="/Bead/Edit/@Model.specificBead.BeadId">Update</a>
-</div>
-<div>
-    <a style="color:#ab2020;" href="/Bead/DeleteConfirm/@Model.specificBead.BeadId">Delete</a>
-</div>
-<h2>@Model.specificBead.BeadName</h2>
-<p>Description: @Model.specificBead.BeadDescription</p>
-<p>Colour: @Model.specificBead.ColourName</p>
-<p>Colour Property: @Model.specificBead.ColourProperty</p>
-
-<div>
-    <h2>This bead is in these keychains </h2>
-    @foreach(var keychain in Model.associatedKeychain)
-            {
-                <a href="/Keychain/Details/@keychain.KeychainId">@keychain.KeychainName</a>
-                <a href="/Bead/UnAssociate/@Model.specificBead.BeadId?KeychainId=@keychain.KeychainId">[x]</a>
-            }
-    
-    <div>
-        <h2>Add this @Model.specificBead.BeadName to another keychain</h2>
-        <form action="/Bead/Associate/@Model.specificBead.BeadId" method="POST">
-            <select name="KeychainId">
-                @foreach (var keychain in Model.aviliableKeychain)
-                {
-                    <option value="@keychain.KeychainId">@keychain.KeychainName</option>
-                }
-
-            </select>
-            <input type="submit" value="Add to Keychain" />
-        </form>
+<div class="menuContainer">
+    <div id="menuLink">
+        <a href="/Bead/List">Back to all the beads</a>
+    </div>
+    <div id="updateLink">
+        <a href="/Bead/Edit/@Model.specificBead.BeadId">Update</a>
+    </div>
+    <div id="deleteLink">
+        <a href="/Bead/DeleteConfirm/@Model.specificBead.BeadId">Delete</a>
     </div>
 </div>
+<h2>@Model.specificBead.BeadName</h2>
+<div class="beadContainer">
+    <div>
+        <img src="~/Content/img/beads/@Model.specificBead.BeadPicture" width="300" />
+    </div>
+    <div>
+        <p>Description: @Model.specificBead.BeadDescription</p>
+        <p>Colour: @Model.specificBead.ColourName</p>
+        <p>Colour Property: @Model.specificBead.ColourProperty</p>
+    </div>
+</div>
+
+<div id="beadKeychainBox">
+    <h2>This bead is in these keychains </h2>
+
+        @foreach (var keychain in Model.associatedKeychain)
+        {
+
+            <a href="/Keychain/Details/@keychain.KeychainId">@keychain.KeychainName</a>
+            <a style="color:#ab2020; margin:0 1.5em 0 0;" href="/Bead/UnAssociate/@Model.specificBead.BeadId?KeychainId=@keychain.KeychainId">[x]</a>
+
+        }
+
+
+        <div id="keychainBox">
+            <h2>Add this @Model.specificBead.BeadName to another keychain</h2>
+            <form action="/Bead/Associate/@Model.specificBead.BeadId" method="POST">
+                <select name="KeychainId">
+                    @foreach (var keychain in Model.aviliableKeychain)
+                    {
+                        <option value="@keychain.KeychainId">@keychain.KeychainName</option>
+                    }
+
+                </select>
+                <input type="submit" value="Add to Keychain" />
+            </form>
+        </div>
+    </div>
+
+<style>
+    .beadContainer {
+        display: flex;
+        gap: 1em;
+       
+    }
+    .menuContainer{
+        display:flex;
+        position:relative;
+        margin:1em 0;
+    }
+    #menuLink {
+        border: solid 1px;
+        padding: 0.5rem;
+        background-color: #FFEBFA;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+    #menuLink a{
+        text-decoration:none;
+        color: black;
+    }
+    #updateLink {
+        position: absolute;
+        right: 7em;
+        border: solid 1px;
+        padding: 0.5rem;
+        background-color: #FFEBFA;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+    #updateLink a{
+        text-decoration:none;
+        color: black;
+    }
+    #deleteLink {
+        position: absolute;
+        right: 1em;
+        border: solid 1px;
+        padding: 0.5rem;
+        background-color: darkred;
+        font-weight: bold;
+        border-radius:5px;
+    }
+    #deleteLink a{
+        text-decoration:none;
+        color: white;
+    }
+    #beadKeychainBox{
+        margin:5em 0;
+    }
+    #keychainBox{
+        margin:2em 0;
+    }
+
+</style>

@@ -5,7 +5,7 @@
 
 <h2>Update Bead</h2>
 
-<form action="/Bead/Update/@Model.SelectedBead.BeadId" method="POST">
+<form action="/Bead/Update/@Model.SelectedBead.BeadId" method="POST" enctype = "multipart/form-data">
     <div style="display:none;">
         @* Pass through the bead ID *@
         <input type="text" name="BeadId" value="@Model.SelectedBead.BeadId" />
@@ -21,16 +21,18 @@
     <div>
         <label>Bead Colour Id:</label>
         <select name="ColourId">
-            <option disabled selected>--Choose the colour--</option>
+
             @foreach (var colour in @Model.beadcoloursOptions)
             {
-                <option value="@colour.ColourId">@colour.ColourProperty @colour.ColourName</option>
+                var selected = "";
+                <option value="@colour.ColourId" @selected>@colour.ColourProperty @colour.ColourName</option>
 
             }
         </select>
     </div>
     <div>
         <label>Bead Picture:</label>
+        <!--input type="file" name="BeadPic" /-->
         <input name="BeadPicture" type="text" value="@Model.SelectedBead.BeadPicture" />
     </div>
     <div>

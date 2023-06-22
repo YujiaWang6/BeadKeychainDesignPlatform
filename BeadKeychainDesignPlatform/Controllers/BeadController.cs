@@ -177,7 +177,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         [Authorize]
         public ActionResult Create(Bead bead)
         {
-            //GetApplicationCookie();
+            GetApplicationCookie();
             string url = "BeadData/AddBead";
             string jsonpayload = jss.Serialize(bead);
 
@@ -249,16 +249,31 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// POST: Bead/Update/{id}
         [HttpPost]
         [Authorize]
-        public ActionResult Update(int id, Bead bead)
+        public ActionResult Update(int id, Bead bead)//, HttpPostedFileBase BeadPic)
         {
-            //GetApplicationCookie();
+            GetApplicationCookie();
             string url = "BeadData/UpdateBead/" + id;
             string jsonpayload = jss.Serialize(bead);
 
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
-            Debug.WriteLine(content);
+            Debug.WriteLine("Content: "+content);
+
+            /*
+            if (response.IsSuccessStatusCode && BeadPic != null)
+            {
+                Debug.WriteLine("working????");
+                url = "BeadData/UploadBeadPic/" + id;
+
+                MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+                HttpContent imagecontent = new StreamContent(BeadPic.InputStream);
+                requestcontent.Add(imagecontent, "BeadPic", BeadPic.FileName);
+                response = client.PostAsync(url, requestcontent).Result;
+
+                return RedirectToAction("List");
+            }*/
+
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("List");
@@ -298,7 +313,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
-            //GetApplicationCookie();
+            GetApplicationCookie();
             string url = "BeadData/DeleteBead/" + id;
 
             HttpContent content = new StringContent("");

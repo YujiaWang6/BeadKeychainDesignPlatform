@@ -7,8 +7,23 @@
 <a href="/Bead/New">New Bead</a>
 @foreach (var bead in Model)
             {
-                <h2><a href="/Bead/Details/@bead.BeadId">@bead.BeadName</a></h2>
-                <p>Description: @bead.BeadDescription</p>
-                <p>Colour: @bead.ColourName</p>
-                <p>Colour Property: @bead.ColourProperty</p>
+                <div class="beadContainer">
+                    <div>
+                        <a href="/Bead/Details/@bead.BeadId"><img src="~/Content/img/beads/@bead.BeadPicture" width="300" /></a>
+                    </div>
+                    <div>
+                        <h2><a href="/Bead/Details/@bead.BeadId">@bead.BeadName</a></h2>
+                        <p>Description: @bead.BeadDescription</p>
+                        <p>Colour: @bead.ColourName</p>
+                        <p>Colour Property: @bead.ColourProperty</p>
+                    </div>
+                </div>
             }
+
+<style>
+    .beadContainer{
+        display:flex;
+        margin:1em 0;
+        gap:1em;
+    }
+</style>

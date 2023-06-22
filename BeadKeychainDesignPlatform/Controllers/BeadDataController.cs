@@ -10,6 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using BeadKeychainDesignPlatform.Models;
 using System.Diagnostics;
+using System.Web;
+using System.IO;
 
 namespace BeadKeychainDesignPlatform.Controllers
 {
@@ -260,6 +262,7 @@ namespace BeadKeychainDesignPlatform.Controllers
             }
 
             db.Entry(bead).State = EntityState.Modified;
+            //db.Entry(bead).Property(b => b.BeadPicture).IsModified = false;
 
             try
             {
@@ -279,6 +282,67 @@ namespace BeadKeychainDesignPlatform.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+
+        /// <summary>
+        /// receives bead picture data and upload it to the webserver and updates the path in database
+        /// </summary>
+        /// <param name="id">the bead id</param>
+        /// <returns>status code 200 if successful.</returns>
+        /// <example>
+        /// curl -F beadPic=@file.jpg "https://localhost:44386/api/BeadData/UploadBeadPic/4"
+        /// HEADER: enctype=multipart/form-data
+        /// FORM-DATA: image
+        /// </example>
+        /// POST: api/BeadData/UploadBeadPic/{id}
+        /*[HttpPost]
+        public IHttpActionResult UploadBeadPic(int id)
+        {
+            string picroot;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                int numfiles = HttpContext.Current.Request.Files.Count;
+
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var beadPic = HttpContext.Current.Request.Files[0];
+                    if (beadPic.ContentLength > 0)
+                    {
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(beadPic.FileName).Substring(1);
+
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                string fn = id + "." + extension;
+
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/img/beads/"), fn);
+                                beadPic.SaveAs(path);
+                                picroot = fn;
+
+                                Bead Selectedbead = db.Beads.Find(id);
+                                Selectedbead.BeadPicture = picroot;
+                                db.Entry(Selectedbead).State = EntityState.Modified;
+
+                                db.SaveChanges();
+                            }
+                            catch(Exception ex)
+                            {
+                                return BadRequest();
+                            }
+                        }
+                    }
+                }
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        */
+
 
         /// <summary>
         /// Add a bead in the system
