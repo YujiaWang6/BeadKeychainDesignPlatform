@@ -262,7 +262,7 @@ namespace BeadKeychainDesignPlatform.Controllers
             }
 
             db.Entry(bead).State = EntityState.Modified;
-            //db.Entry(bead).Property(b => b.BeadPicture).IsModified = false;
+            db.Entry(bead).Property(b => b.BeadPicture).IsModified = false;
 
             try
             {
@@ -295,7 +295,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// FORM-DATA: image
         /// </example>
         /// POST: api/BeadData/UploadBeadPic/{id}
-        /*[HttpPost]
+        [HttpPost]
         public IHttpActionResult UploadBeadPic(int id)
         {
             string picroot;
@@ -341,7 +341,7 @@ namespace BeadKeychainDesignPlatform.Controllers
                 return BadRequest();
             }
         }
-        */
+        
 
 
         /// <summary>

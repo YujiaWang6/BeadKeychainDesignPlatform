@@ -249,7 +249,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         /// POST: Bead/Update/{id}
         [HttpPost]
         [Authorize]
-        public ActionResult Update(int id, Bead bead)//, HttpPostedFileBase BeadPic)
+        public ActionResult Update(int id, Bead bead, HttpPostedFileBase beadPic)
         {
             GetApplicationCookie();
             string url = "BeadData/UpdateBead/" + id;
@@ -260,21 +260,21 @@ namespace BeadKeychainDesignPlatform.Controllers
             HttpResponseMessage response = client.PostAsync(url, content).Result;
             Debug.WriteLine("Content: "+content);
 
-            /*
-            if (response.IsSuccessStatusCode && BeadPic != null)
+            
+            if (response.IsSuccessStatusCode && beadPic != null)
             {
                 Debug.WriteLine("working????");
                 url = "BeadData/UploadBeadPic/" + id;
 
                 MultipartFormDataContent requestcontent = new MultipartFormDataContent();
-                HttpContent imagecontent = new StreamContent(BeadPic.InputStream);
-                requestcontent.Add(imagecontent, "BeadPic", BeadPic.FileName);
+                HttpContent imagecontent = new StreamContent(beadPic.InputStream);
+                requestcontent.Add(imagecontent, "beadPic", beadPic.FileName);
                 response = client.PostAsync(url, requestcontent).Result;
 
                 return RedirectToAction("List");
-            }*/
+            }
 
-            if (response.IsSuccessStatusCode)
+            else if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("List");
             }
