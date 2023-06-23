@@ -22,13 +22,14 @@
             <input name="BeadDescription" type="text" value="@Model.SelectedBead.BeadDescription" />
         </div>
         <div>
+
             <label>Bead Colour Id:</label>
             <select name="ColourId">
-                https://localhost:44386/Bead/Details/15
+                <option disabled selected>--Choose the colour--</option>
                 @foreach (var colour in @Model.beadcoloursOptions)
                 {
-                    var selected = "";
-                    <option value="@colour.ColourId" @selected>@colour.ColourProperty @colour.ColourName</option>
+
+                    <option value="@colour.ColourId">@colour.ColourProperty @colour.ColourName</option>
 
                 }
             </select>

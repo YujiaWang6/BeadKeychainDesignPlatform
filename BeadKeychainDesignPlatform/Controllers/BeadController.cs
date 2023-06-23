@@ -178,7 +178,7 @@ namespace BeadKeychainDesignPlatform.Controllers
         public ActionResult Create(Bead bead)
         {
             GetApplicationCookie();
-            string url = "BeadData/AddBead";
+            string url = "BeadData/AddBead/";
             string jsonpayload = jss.Serialize(bead);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -193,6 +193,7 @@ namespace BeadKeychainDesignPlatform.Controllers
             {
                 return RedirectToAction("Error");
             }
+
         }
 
         /// <summary>
@@ -271,12 +272,12 @@ namespace BeadKeychainDesignPlatform.Controllers
                 requestcontent.Add(imagecontent, "beadPic", beadPic.FileName);
                 response = client.PostAsync(url, requestcontent).Result;
 
-                return RedirectToAction("List");
+                return RedirectToAction("Details/"+id);
             }
 
             else if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("List");
+                return RedirectToAction("Details/"+id);
             }
             else
             {
