@@ -2,23 +2,76 @@
     @{
     ViewBag.Title = "Details";
 }
+<div class="menuContainer">
+    <div class="menuLink">
+        <a href="/BeadColour/List">Back to all the bead colours</a>
+    </div>
+    <div id="updateLink">
+        <a href="/BeadColour/Edit/@Model.specificColour.ColourId">Update</a>
+    </div>
+    <div id="deleteLink">
+        <a href="/BeadColour/DeleteConfirm/@Model.specificColour.ColourId">Delete</a>
+    </div>
+</div>
 
-<div>
-    <a href="/BeadColour/List">Back to all the bead colours</a>
-</div>
-<div>
-    <a href="/BeadColour/Edit/@Model.specificColour.ColourId">Update</a>
-</div>
-<div>
-    <a style="color:#ab2020;" href="/BeadColour/DeleteConfirm/@Model.specificColour.ColourId">Delete</a>
-</div>
+    <h2>@Model.specificColour.ColourProperty @Model.specificColour.ColourName</h2>
 
-<h2>@Model.specificColour.ColourProperty @Model.specificColour.ColourName</h2>
+    <div>
+        <h3>Beads related to this Colour</h3>
+        @foreach (var bead in Model.relatedBeads)
+        {
+            <a href="/Bead/Details/@bead.BeadId"><img src="~/Content/img/beads/@bead.BeadPicture" width="200"/></a>
+        }
+    </div>
+<style>
+    .menuContainer {
+        display: flex;
+        position: relative;
+        margin: 1em 0;
+    }
 
-<div>
-    <h3>Beads related to this Colour</h3>
-    @foreach(var bead in Model.relatedBeads)
-            {
-                <a href="/Bead/Details/@bead.BeadId">@bead.BeadName</a>
-            }
-</div>
+    .menuLink {
+        border: solid 1px;
+        padding: 0.5rem;
+        background-color: #add8e6;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+
+
+
+    .menuLink a {
+        text-decoration: none;
+        color: black;
+    }
+
+    #updateLink {
+        position: absolute;
+        right: 7em;
+        border: solid 1px;
+        padding: 0.5rem;
+        background-color: #add8e6;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+
+    #updateLink a {
+        text-decoration: none;
+        color: black;
+    }
+
+    #deleteLink {
+        position: absolute;
+        right: 1em;
+        border: solid 1px;
+        padding: 0.5rem;
+        background-color: darkred;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+
+    #deleteLink a {
+        text-decoration: none;
+        color: white;
+    }
+</style>

@@ -4,7 +4,7 @@
 }
 
 <h2>List of Beads</h2>
-<a href="/Bead/New">New Bead</a>
+<a href="/Bead/New" id="button">New Bead</a>
 @foreach (var bead in Model)
             {
                 <div class="beadContainer">
@@ -26,4 +26,19 @@
         margin:1em 0;
         gap:1em;
     }
+    #button {
+        border: solid 2px black;
+        padding: 0.7rem;
+        margin: 2em 0;
+        text-decoration: none;
+        background-color: black;
+        color: #FFEBFA;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+        #button:hover {
+            background-color: #FFEBFA;
+            color: black;
+            border: solid 2px #FFEBFA;
+        }
 </style>

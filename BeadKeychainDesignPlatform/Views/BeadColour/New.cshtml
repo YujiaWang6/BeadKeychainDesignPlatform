@@ -2,23 +2,53 @@
 @{
     ViewBag.Title = "New";
 }
+<div class="menuLink">
+    <a href="/BeadColour/List">Back to all the bead colours</a>
+</div>
+<div class="create">
+    <h2>Create a bead colour</h2>
 
-<h2>Create a bead colour</h2>
-
-<form action="/BeadColour/Create" method="POST">
-    <div>
-        <label>Colour Name:</label>
-        <input name="ColourName" type="text" />
-    </div>
-    <div>
+    <form action="/BeadColour/Create" method="POST">
+        <div>
+            <label>Colour Name:</label>
+            <input name="ColourName" type="text" />
+        </div>
+        <div>
             <label>Colour Property:</label>
             <input name="ColourProperty" type="radio" id="Solid" value="Solid" />
             <label for="Solid">Solid</label>
             <input name="ColourProperty" type="radio" id="Transparent" value="Transparent" />
             <label for="Transparent">Transparent</label>
-    </div>
-    <div>
-        <input type="submit" value="Add A Bead Colour" />
-    </div>
+        </div>
+        <div>
+            <input type="submit" value="Add A Bead Colour" id="button"/>
+        </div>
 
-</form>
+    </form>
+</div>
+
+
+<style>
+    .create {
+        border: dashed 4px #000;
+        margin: 5em;
+        padding: 3em;
+        background-color: #d4ebf2;
+    }
+    #button {
+        background-color: #3aa1bf;
+        border: solid 1px #3aa1bf;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+    }
+    .menuLink {
+        margin: 2rem 0;
+    }
+
+    .menuLink a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
+</style>

@@ -2,12 +2,66 @@
 @{
     ViewBag.Title = "DeleteConfirm";
 }
+<div class="menuLink">
+    <a href="/BeadColour/Details/@Model.ColourId">Back</a>
+</div>
+<div class="delete">
+    <h2>Are you sure you want to delete this colour?</h2>
 
-<h2>Are you sure you want to delete this colour?</h2>
-<a href="/BeadColour/List">Cancel</a>
-<div>Colour: @Model.ColourName</div>
-<div>Colour Property: @Model.ColourProperty</div>
-<form action="/BeadColour/Delete/@Model.ColourId" method="POST">
-    <input type="submit" value="Confirm Delete" />
+    <div>Colour: @Model.ColourName</div>
+    <div>Colour Property: @Model.ColourProperty</div>
+    <div class="choosebox">
+        <form action="/BeadColour/Delete/@Model.ColourId" method="POST">
+            <input type="submit" value="Confirm Delete" id="deletebutton"/>
 
-</form>
+        </form>
+        <div id="cancelbutton">
+            <a href="/BeadColour/List">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .choosebox {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .delete {
+        border: dashed 4px #000;
+        margin: 5em;
+        padding: 3em;
+        background-color: #ffb7b7;
+        text-align: center;
+    }
+
+    #deletebutton {
+        background-color: #890000;
+        border: solid 1px #890000;
+        border-radius: 5px;
+        font-weight: bold;
+        color: white;
+    }
+
+    #cancelbutton {
+        background-color: white;
+        border: solid 1px white;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+        #cancelbutton a {
+            text-decoration: none;
+            color: black;
+        }
+
+    .menuLink {
+        margin: 2rem 0;
+    }
+
+        .menuLink a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+</style>

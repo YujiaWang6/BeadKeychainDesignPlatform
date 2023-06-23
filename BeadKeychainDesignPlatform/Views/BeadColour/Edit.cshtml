@@ -2,27 +2,56 @@
 @{
     ViewBag.Title = "Edit";
 }
+<div class="menuLink">
+    <a href="/BeadColour/Details/@Model.ColourId">Back</a>
+</div>
+<div class="create">
+    <h2>Update Bead Colour</h2>
 
-<h2>Update Bead Colour</h2>
+    <form action="/BeadColour/Update/@Model.ColourId" method="POST">
+        <div style="display:none;">
+            @* Pass through the bead ID *@
+            <input type="text" name="ColourId" value="@Model.ColourId" />
+        </div>
+        <div>
+            <label>Colour Name:</label>
+            <input name="ColourName" type="text" value="@Model.ColourName" />
+        </div>
+        <div>
+            <label>Colour Property:</label>
+            <input name="ColourProperty" type="radio" id="Solid" value="Solid" />
+            <label for="Solid">Solid</label>
+            <input name="ColourProperty" type="radio" id="Transparent" value="Transparent" />
+            <label for="Transparent">Transparent</label>
+        </div>
+        <div>
+            <input type="submit" value="Update Bead Colour" id="button"/>
+        </div>
 
-<form action="/BeadColour/Update/@Model.ColourId" method="POST">
-    <div style="display:none;">
-        @* Pass through the bead ID *@
-        <input type="text" name="ColourId" value="@Model.ColourId" />
-    </div>
-    <div>
-        <label>Colour Name:</label>
-        <input name="ColourName" type="text" value="@Model.ColourName" />
-    </div>
-    <div>
-        <label>Colour Property:</label>
-        <input name="ColourProperty" type="radio" id="Solid" value="Solid" />
-        <label for="Solid">Solid</label>
-        <input name="ColourProperty" type="radio" id="Transparent" value="Transparent" />
-        <label for="Transparent">Transparent</label>
-    </div>
-    <div>
-        <input type="submit" value="Update Bead Colour" />
-    </div>
+    </form>
+</div>
 
-</form>
+<style>
+    .menuLink {
+        margin: 2rem 0;
+    }
+
+    .menuLink a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
+    .create {
+        border: dashed 4px #000;
+        margin: 5em;
+        padding: 3em;
+        background-color: #d8e6ad;
+    }
+    #button {
+        background-color: #6e8428;
+        border: solid 1px #6e8428;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+    }
+</style>

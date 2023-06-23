@@ -3,7 +3,7 @@
     ViewBag.Title = "Details";
 }
 <div class="menuContainer">
-    <div id="menuLink">
+    <div class="menuLink">
         <a href="/Bead/List">Back to all the beads</a>
     </div>
     <div id="updateLink">
@@ -47,7 +47,7 @@
                     }
 
                 </select>
-                <input type="submit" value="Add to Keychain" />
+                <input type="submit" value="Add to Keychain" class="menuLink" />
             </form>
         </div>
     </div>
@@ -63,17 +63,23 @@
         position:relative;
         margin:1em 0;
     }
-    #menuLink {
+    .menuLink {
+
+
         border: solid 1px;
         padding: 0.5rem;
         background-color: #FFEBFA;
         font-weight: bold;
         border-radius: 5px;
     }
-    #menuLink a{
+
+
+
+    .menuLink a{
         text-decoration:none;
         color: black;
     }
+
     #updateLink {
         position: absolute;
         right: 7em;

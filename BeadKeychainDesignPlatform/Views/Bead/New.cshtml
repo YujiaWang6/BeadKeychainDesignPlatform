@@ -2,34 +2,61 @@
 @{
     ViewBag.Title = "New";
 }
+<div class="menuLink">
+    <a href="/Bead/List">Back to all the beads</a>
+</div>
+<div class="create">
+    <h2>Create A Bead</h2>
+    <form action="/Bead/Create" method="POST">
+        <div>
+            <label>Bead Name:</label>
+            <input name="BeadName" type="text" />
+        </div>
+        <div>
+            <label>Bead Description:</label>
+            <input name="BeadDescription" type="text" />
+        </div>
+        <div>
+            <label>Bead Colour Id:</label>
+            <select name="ColourId">
+                <option disabled selected>--Choose the colour--</option>
+                @foreach (var colour in Model)
+                {
+                    <option value="@colour.ColourId">@colour.ColourProperty @colour.ColourName</option>
 
-<h2>Create A Bead</h2>
-<form action="/Bead/Create" method="POST">
-    <div>
-        <label>Bead Name:</label>
-        <input name="BeadName" type="text" />
-    </div>
-    <div>
-        <label>Bead Description:</label>
-        <input name="BeadDescription" type="text" />
-    </div>
-    <div>
-        <label>Bead Colour Id:</label>
-        <select name="ColourId">
-            <option disabled selected>--Choose the colour--</option>
-            @foreach (var colour in Model)
-            {
-                <option value="@colour.ColourId">@colour.ColourProperty @colour.ColourName</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label>Bead Picture:</label>
+            <input name="BeadPicture" type="text" />
+        </div>
+        <div>
+            <input type="submit" value="Add A Bead" id="button" />
+        </div>
 
-            }
-        </select>
-    </div>
-    <div>
-        <label>Bead Picture:</label>
-        <input name="BeadPicture" type="text" />
-    </div>
-    <div>
-        <input type="submit" value="Add A Bead" />
-    </div>
+    </form>
+</div>
+<style>
+    .create {
+        border: dashed 4px #000;
+        margin: 5em;
+        padding: 3em;
+        background-color: #FFEBFA;
+    }
+    .menuLink {
+        margin: 2rem 0;
+    }
+    .menuLink a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
 
-</form>
+    }
+    #button {
+        background-color: #ff9fe7;
+        border: solid 1px #ff9fe7;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+</style>

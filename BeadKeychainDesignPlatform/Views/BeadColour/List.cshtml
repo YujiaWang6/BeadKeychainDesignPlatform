@@ -4,8 +4,26 @@
 }
 
 <h2>List of Bead Colours</h2>
-<a href="/BeadColour/New">New Bead Colour</a>
+<a href="/BeadColour/New" id="button">New Bead Colour</a>
 @foreach (var beadcolour in Model)
 {
     <h2><a href="/BeadColour/Details/@beadcolour.ColourId">@beadcolour.ColourProperty @beadcolour.ColourName</a></h2>
 }
+<style>
+    #button {
+        border: solid 2px black;
+        padding: 0.7rem;
+        margin: 2em 0;
+        text-decoration: none;
+        background-color: black;
+        color: #ADD8E6;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+
+    #button:hover {
+        background-color: #ADD8E6;
+        color: black;
+        border: solid 2px #ADD8E6;
+    }
+</style>

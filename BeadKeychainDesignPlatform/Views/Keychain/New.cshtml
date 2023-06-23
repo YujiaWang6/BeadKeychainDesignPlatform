@@ -2,16 +2,45 @@
 @{
     ViewBag.Title = "New";
 }
+<div class="menuLink">
+    <a href="/Keychain/List">Back to all the keychains</a>
+</div>
+<div class="create">
+    <h2>Create a Keychain</h2>
 
-<h2>Create a Keychain</h2>
+    <form action="/Keychain/Create" method="POST">
+        <div>
+            <label>Keychain Name:</label>
+            <input name="KeychainName" type="text" />
+        </div>
+        <div>
+            <input type="submit" value="Add A Keychain" id="button"/>
+        </div>
 
-<form action="/Keychain/Create" method="POST">
-    <div>
-        <label>Keychain Name:</label>
-        <input name="KeychainName" type="text" />
-    </div>
-    <div>
-        <input type="submit" value="Add A Keychain" />
-    </div>
+    </form>
+</div>
 
-</form>
+<style>
+    .create {
+        border: dashed 4px #000;
+        margin: 5em;
+        padding: 3em;
+        background-color: #f2ead4;
+    }
+    .menuLink {
+        margin: 2rem 0;
+    }
+
+        .menuLink a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+    #button {
+        background-color: #bf9b3a;
+        border: solid 1px #bf9b3a;
+        border-radius: 5px;
+        font-weight: bold;
+        color: white;
+    }
+</style>

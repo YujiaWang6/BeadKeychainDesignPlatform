@@ -2,20 +2,52 @@
 @{
     ViewBag.Title = "Edit";
 }
+<div class="menuLink">
+    <a href="/Keychain/Details/@Model.KeychainId">Back</a>
+</div>
+<div class="create">
+    <h2>Update Keychain</h2>
 
-<h2>Update Keychain</h2>
+    <form action="/Keychain/Update/@Model.KeychainId" method="POST">
+        <div style="display:none;">
+            @* Pass through the bead ID *@
+            <input type="text" name="KeychainId" value="@Model.KeychainId" />
+        </div>
+        <div>
+            <label>Keychain Name:</label>
+            <input name="KeychainName" type="text" value="@Model.KeychainName" />
+        </div>
+        <div>
+            <input type="submit" value="Update Keychain" id="button" />
+        </div>
 
-<form action="/Keychain/Update/@Model.KeychainId" method="POST">
-    <div style="display:none;">
-        @* Pass through the bead ID *@
-        <input type="text" name="KeychainId" value="@Model.KeychainId" />
-    </div>
-    <div>
-        <label>Keychain Name:</label>
-        <input name="KeychainName" type="text" value="@Model.KeychainName" />
-    </div>
-    <div>
-        <input type="submit" value="Update Keychain" />
-    </div>
+    </form>
+</div>
 
-</form>
+
+<style>
+    .menuLink {
+        margin: 2rem 0;
+    }
+
+        .menuLink a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+    .create {
+        border: dashed 4px #000;
+        margin: 5em;
+        padding: 3em;
+        background-color: #bfd9bf;
+    }
+
+    #button {
+        background-color: #427142;
+        border: solid 1px #427142;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+    }
+</style>

@@ -1,21 +1,75 @@
 ﻿@model BeadKeychainDesignPlatform.Models.ViewModels.DetailsKeychain
  @{   ViewBag.Title = "Details";
 }
-<div>
-    <a href="/Keychain/List">Back to all the keychains</a>
+<div class="menuContainer">
+    <div class="menuLink">
+        <a href="/Keychain/List">Back to all the keychains</a>
+    </div>
+    <div id="updateLink">
+        <a href="/Keychain/Edit/@Model.specificKeychain.KeychainId">Update</a>
+    </div>
+    <div id="deleteLink">
+        <a href="/Keychain/DeleteConfirm/@Model.specificKeychain.KeychainId">Delete</a>
+    </div>
 </div>
-<div>
-    <a href="/Keychain/Edit/@Model.specificKeychain.KeychainId">Update</a>
-</div>
-<div>
-    <a style="color:#ab2020;" href="/Keychain/DeleteConfirm/@Model.specificKeychain.KeychainId">Delete</a>
-</div>
-<h2>@Model.specificKeychain.KeychainName</h2>
+    <h2>@Model.specificKeychain.KeychainName</h2>
 
-<div>
-    <h3>All the beads inside this keychain:</h3>
-    @foreach(var bead in Model.beadsInKeychain)
-            {
-                <a href="/Bead/Details/@bead.BeadId">@bead.BeadName</a>
+    <div>
+        <h3>All the beads inside this keychain:</h3>
+        @foreach (var bead in Model.beadsInKeychain)
+        {
+            <a href="/Bead/Details/@bead.BeadId"><img src="~/Content/img/beads/@bead.BeadPicture" width="200"/></a>
+        }
+    </div>
+    <style>
+        .menuContainer {
+            display: flex;
+            position: relative;
+            margin: 1em 0;
+        }
+
+        .menuLink {
+            border: solid 1px;
+            padding: 0.5rem;
+            background-color: #f2ead4;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+
+
+            .menuLink a {
+                text-decoration: none;
+                color: black;
             }
-</div>
+
+        #updateLink {
+            position: absolute;
+            right: 7em;
+            border: solid 1px;
+            padding: 0.5rem;
+            background-color: #f2ead4;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+            #updateLink a {
+                text-decoration: none;
+                color: black;
+            }
+
+        #deleteLink {
+            position: absolute;
+            right: 1em;
+            border: solid 1px;
+            padding: 0.5rem;
+            background-color: darkred;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+            #deleteLink a {
+                text-decoration: none;
+                color: white;
+            }
+    </style>

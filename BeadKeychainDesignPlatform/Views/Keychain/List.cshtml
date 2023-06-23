@@ -4,8 +4,26 @@
 }
 
 <h2>List of Keychain</h2>
-<a href="/Keychain/New">New Keychain</a>
+<a href="/Keychain/New"  id="button">New Keychain</a>
 @foreach (var keychain in Model)
 {
     <h2><a href="/Keychain/Details/@keychain.KeychainId">@keychain.KeychainName</a></h2>
 }
+<style>
+    #button {
+        border: solid 2px black;
+        padding: 0.7rem;
+        margin: 2em 0;
+        text-decoration: none;
+        background-color: black;
+        color: #f2ead4;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+
+        #button:hover {
+            background-color: #f2ead4;
+            color: black;
+            border: solid 2px #f2ead4;
+        }
+</style>
