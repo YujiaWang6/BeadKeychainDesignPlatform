@@ -41,6 +41,7 @@ namespace BeadKeychainDesignPlatform.Controllers
                 BeadDescription= b.BeadDescription,
                 BeadName = b.BeadName,
                 BeadPicture=b.BeadPicture,
+                ColourId=b.ColourId,
                 ColourName = b.BeadColour.ColourName,
                 ColourProperty=b.BeadColour.ColourProperty
             }));
@@ -73,6 +74,7 @@ namespace BeadKeychainDesignPlatform.Controllers
                 BeadDescription = b.BeadDescription,
                 BeadName = b.BeadName,
                 BeadPicture = b.BeadPicture,
+                ColourId=b.ColourId,
                 ColourName = b.BeadColour.ColourName,
                 ColourProperty = b.BeadColour.ColourProperty
             }));
@@ -109,6 +111,7 @@ namespace BeadKeychainDesignPlatform.Controllers
                 BeadDescription = b.BeadDescription,
                 BeadName = b.BeadName,
                 BeadPicture = b.BeadPicture,
+                ColourId=b.ColourId,
                 ColourName = b.BeadColour.ColourName,
                 ColourProperty = b.BeadColour.ColourProperty
             }));
@@ -207,6 +210,7 @@ namespace BeadKeychainDesignPlatform.Controllers
                 BeadDescription= Bead.BeadDescription,
                 BeadName= Bead.BeadName,
                 BeadPicture= Bead.BeadPicture,
+                ColourId= Bead.ColourId,
                 ColourName= Bead.BeadColour.ColourName,
                 ColourProperty = Bead.BeadColour.ColourProperty
             };

@@ -33,6 +33,7 @@ namespace BeadKeychainDesignPlatform.Models
         public string BeadName { get; set; }
         public string BeadDescription { get; set; }
         public string BeadPicture { get; set; }
+        public int ColourId { get; set; }
         public string ColourName { get; set; }
         public string ColourProperty { get; set; }
     }
